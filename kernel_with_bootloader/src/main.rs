@@ -102,7 +102,7 @@ fn my_entry_point(boot_info: &'static mut bootloader_api::BootInfo) -> ! {
         ALLOCATOR.init(heap_start as usize, heap_size as usize);
     }
 
-    // Now that the heap allocator is initialized, create the framebuffer writer
+    // Create the framebuffer writer after the heap exists (it allocates a shadow buffer for insert mode).
     FrameBufferWriter::new(buffer, frame_buffer_info);
 
     // Set initial cursor position

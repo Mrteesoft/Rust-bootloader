@@ -30,6 +30,15 @@ const TAB_SPACING: usize = 30;
 /// Padding from the border. Prevent that font is too close to border.
 const BORDER_PADDING: usize = 5;
 
+/*
+Overview of the additions in this file:
+- Insert mode: keep a shadow grid (Vec<Option<char>>) of what's on screen so we can shift text
+  right/left instead of painting over pixels. Lines redraw from this buffer to avoid artifacts.
+- Visible blinking cursor: draw/erase/toggle functions paint a caret over the current cell; the
+  timer interrupt flips the caret state.
+- Helpers: coordinate/index helpers and redraw logic to keep cursor and buffer aligned.
+*/
+
 /// Returns the raster of the given char or the raster of [`font_constants::BACKUP_CHAR`].
 pub fn get_char_raster(c: char) -> RasterizedChar {
     fn get(c: char) -> Option<RasterizedChar> {
@@ -44,6 +53,7 @@ pub struct FrameBufferWriter {
     info: FrameBufferInfo,
     x_pos: usize,
     y_pos: usize,
+    // Shadow text grid so we can shift characters for insert/backspace instead of overwriting pixels.
     cols: usize,
     rows: usize,
     buffer: Vec<Option<char>>,
@@ -369,6 +379,7 @@ impl FrameBufferWriter {
         }
         let x_start = self.x_pos;
         let y_start = self.y_pos;
+        // Fill the current cell so the caret is visible over any background glyph.
         for y in 0..CHAR_RASTER_HEIGHT.val() {
             for x in 0..CHAR_RASTER_WIDTH {
                 self.write_pixel(x_start + x, y_start + y, 200);
@@ -382,6 +393,7 @@ impl FrameBufferWriter {
         }
         let x_start = self.x_pos;
         let y_start = self.y_pos;
+        // Clear the cell back to black, then redraw any underlying character.
         for y in 0..CHAR_RASTER_HEIGHT.val() {
             for x in 0..CHAR_RASTER_WIDTH {
                 self.write_pixel(x_start + x, y_start + y, 0);

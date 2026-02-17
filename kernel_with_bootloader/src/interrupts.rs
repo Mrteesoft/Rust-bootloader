@@ -79,6 +79,7 @@ extern "x86-interrupt" fn timer_interrupt_handler(_stack_frame: InterruptStackFr
         let mut ticks = BLINK_TICKS.lock();
         *ticks += 1;
         if *ticks % CURSOR_BLINK_DIVISOR == 0 {
+            // Drive cursor blink from PIT ticks (cursor paint/erase lives in writer.rs).
             x86_64::instructions::interrupts::without_interrupts(|| {
                 if let Some(writer) = FRAME_BUFFER_WRITER.lock().as_mut() {
                     writer.toggle_cursor();
