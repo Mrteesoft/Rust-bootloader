@@ -1,4 +1,4 @@
-use crate::{print, println};
+use crate::println;
 use lazy_static::lazy_static;
 use pc_keyboard::KeyCode;
 use pc_keyboard::{layouts, DecodedKey, HandleControl, Keyboard, ScancodeSet1};

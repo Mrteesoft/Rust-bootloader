@@ -35,7 +35,7 @@ qemu-system-x86_64 -drive format=raw,file="" -serial stdio -vga std
 
 What to test
 - Cursor blinks and tracks arrow keys.
-- Insert mode: type "HELLO WORLD", move left 5, type "X" → "HELLO XWORLD".
+- Insert mode: type "HELLO WORLD", move left 5, type "X"  "HELLO XWORLD".
 - Backspace in the middle pulls text left without leaving artifacts.
 
 Known limitations

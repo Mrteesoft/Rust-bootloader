@@ -275,6 +275,7 @@ impl FrameBufferWriter {
 
     /// Prints a rendered char into the framebuffer.
     /// Updates `self.x_pos`.
+    #[allow(dead_code)]
     pub fn write_rendered_char(&mut self, rendered_char: RasterizedChar) {
         for (y, row) in rendered_char.raster().iter().enumerate() {
             for (x, byte) in row.iter().enumerate() {
@@ -422,6 +423,7 @@ impl FrameBufferWriter {
         }
     }
 
+    #[allow(dead_code)]
     pub fn reset_cursor(&mut self) {
         CURSOR_VISIBLE.store(true, Ordering::SeqCst);
         self.draw_cursor();
