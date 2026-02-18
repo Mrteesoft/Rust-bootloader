@@ -9,7 +9,7 @@ What we changed
 
 How to build
 - Run: cargo build
-- Outputs land in: 	arget/debug/build/os_with_bootloader-*/out/ (look for ios.img and uefi.img).
+- Outputs land in: 	arget/debug/build/os_with_bootloader-*/out/ 
 
 How to run
 - Easiest: cargo run (defaults to UEFI; flip in os_with_bootloader/src/main.rs if you need BIOS).
