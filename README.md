@@ -13,7 +13,7 @@ How to build
 
 How to run
 - Easiest: cargo run (defaults to UEFI; flip in os_with_bootloader/src/main.rs if you need BIOS).
-- Manual BIOS run (PowerShell/WSL-friendly):
+- Manual BIOS run 
 `
  = (Get-ChildItem -Recurse target\debug\build -Filter bios.img | Sort-Object LastWriteTime -Descending | Select-Object -First 1).FullName
 qemu-system-x86_64 -drive format=raw,file="" -serial stdio -vga std
@@ -22,8 +22,8 @@ qemu-system-x86_64 -drive format=raw,file="" -serial stdio -vga std
 Quick test script
 1) Type ABC
 2) Left Arrow twice (cursor before B)
-3) Type X → you should see AXBC (insert mode working)
-4) Backspace → ABC (no pixel junk)
+3) Type X  you should see AXBC (insert mode working)
+4) Backspace  ABC (no pixel junk)
 5) Watch the cursor blink; move with arrows and it follows.
 
 Notes / edge cases
